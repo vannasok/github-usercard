@@ -37,7 +37,7 @@ axios.get('https://api.github.com/users/vannasok')
 */
 
 const followersArray = [];
-axios.get("https://api.github.com/users/vannasok/followers")
+axios.get("https://api.github.com/users/vannasok/following")
   .then( response =>{
     console.log(response);
     response.data.forEach(element =>{
