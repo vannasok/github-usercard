@@ -2,6 +2,16 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+axios.get('https://api.github.com/users/vannasok')
+  .then( response =>{
+    console.log(response);
+    cards.appendChild(createCard(response.data))
+    
+     
+  })
+  .catch(error => {
+    console.log("Return Failed.", error);
+  })
 
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -26,7 +36,19 @@
           user, and adding that card to the DOM.
 */
 
-// const followersArray = [];
+const followersArray = [];
+axios.get("https://api.github.com/users/vannasok/followers")
+  .then( response =>{
+    console.log(response);
+    response.data.forEach(element =>{
+      const newCard = createCard(element);
+      cards.appendChild(newCard);
+    })
+  })
+  .catch(error => {
+    console.log("Return Failed.", error);
+  })
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -47,19 +69,6 @@
 </div>
 
 */
-axios.get('https://api.github.com/users/vannasok')
-  .then( response =>{
-    console.log(response);
-    response.data.forEach(element => {
-      const newCard = createCard(element);
-      cards.appendChild(newCard);
-      
-    });
-    
-  })
-  .catch(error => {
-    console.log("Return Failed.", error);
-  })
 
 const cards = document.querySelector('.cards');
 
@@ -99,13 +108,13 @@ function createCard (data){
   cardName.classList.add('username');
 
   //text content
-  cardImg.src = 'https://avatars0.githubusercontent.com/u/53488795?v=4';
+  cardImg.src = `${data.avatar_url}`;
   cardTitle.textContent = `${data.name}`;
   cardName.textContent = `${data.login}`;
   cardLocation.textContent = `Location: ${data.location}`;
   cardProfile.textContent = `Profile: ${data.html_url}`;
-  cardFollowers.textContent = `Followers: ${data.followers.length}`;
-  cardFollowing.textContent = `Following: ${data.following.length}`;
+  cardFollowers.textContent = `Followers: ${data.followers}`;
+  cardFollowing.textContent = `Following: ${data.following}`;
   cardBio.textContent = `Bio: ${data.bio}`;
 
   return card;
@@ -120,3 +129,4 @@ function createCard (data){
   luishrd
   bigknell
 */
+
